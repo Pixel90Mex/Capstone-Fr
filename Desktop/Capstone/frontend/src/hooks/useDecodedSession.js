@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 
 const useDecodedSession = () => {
-    const session = JSON.parse(localStorage.getItem("auth"));
-    const [decodedSession, setDecodedSession] = useState(null);
+    const session = JSON.parse(localStorage.getItem("session"));
 
-    useEffect(() => {
-        if (session) {
-            const decodedSession = jwt_decode(session)
-            console.log(decodedSession)
-            setDecodedSession(decodedSession)
-        }
-    }, [session]);
+        const decodedSession = jwt_decode(session)
+        return decodedSession;
 };
 
 export default useDecodedSession;

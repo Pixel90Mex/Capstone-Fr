@@ -1,11 +1,12 @@
 import React from "react";
 import {Button, Form} from "react-bootstrap";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch} from "react-redux";
 import { LoginRequest } from "../reducers/loginSlice";
 import { Toast } from "../utilities/notification";
 import { Toaster } from "react-hot-toast";
+import jwtDecode from "jwt-decode";
 
 const Login = () => {
 
@@ -23,10 +24,11 @@ const Login = () => {
         dispatch(LoginRequest(formData)).then((action) => {
             if (action.payload && action.payload.token) {
                 successToast.success();
-                localStorage.setItem("auth", JSON.stringify(action.payload.token));
-
+                localStorage.setItem("session", JSON.stringify(action.payload.token));
+                const decodeToken = jwtDecode(action.payload.token);
+                console.log(decodeToken);
                 setTimeout(() => {
-                    navigate("/UserArea", { replace: true });
+                    navigate(`/UserArea/${decodeToken.id}`, { replace: true });
                 }, 1500);
             } else {
                 errorToast.error();
@@ -37,7 +39,6 @@ const Login = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value});
     };
-
     return (
         <>
             <div>

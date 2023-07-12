@@ -6,9 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import loginReducer from './reducers/loginSlice';
+//import classReducer from './reducers/ClassSlice';
 
 const reducer = combineReducers({
   loginState: loginReducer,
+  //classSate: classReducer
 })
 
 const store = configureStore({
